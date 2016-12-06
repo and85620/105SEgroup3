@@ -1,0 +1,48 @@
+<div id="FBsrhResult">
+	<ul class="ulstyle1">
+
+	<%
+		for(var j =0;j<tmps.length;j++){
+			for(var i = 0 ; i < fbgoogles[tmps[j]].length ; i++){
+				var thisID = fbgoogles[tmps[j]][i]['fbid'];
+				var thislike = fbgoogles[tmps[j]][i]['likes'];
+				var imgtype = ["icon\\none.png","icon\\ok.png"];
+				if(thisID == null)continue;
+				var imgsrc = (fbgoogles[tmps[j]][i]['kind'] == "Personal") ? "icon\\people.png" : imgtype[fbgoogles[tmps[j]][i]['follow']];
+				var peopleman = (fbgoogles[tmps[j]][i]['kind'] == "Personal") ? "<span id='IamPerson' >ಠิܫಠิ</span><span>人物</span>" : "<i class='fa fa-thumbs-o-up'>&nbsp;</i>"+thislike;
+				var addshowadd = (imgsrc == "icon\\none.png")?"noneAttachimg mousehand":"";
+	%>
+
+		<li class="<%= 'li' + sortclasss[j] %>" style="display: none;">
+			<div class="fbhdd">
+				<a target="_blank" href="https://www.facebook.com/<%= thisID %>">
+					<img src="http://graph.facebook.com/<%= thisID %>/picture" alt="">
+				</a>
+			</div>
+			<div class="fbnamelike">
+				<a target="_blank" href="https://www.facebook.com/<%= thisID %>">
+					<span class="fbnames"><%= fbgoogles[tmps[j]][i]['title'] %></span>
+				</a>
+				<hr color="rgba(0,0,0,0.5);">
+				<span class="likes"><%= peopleman %></span>
+				<span class="googrk"><i class="fa fa-google">Rank:&nbsp;</i><%= fbgoogles[tmps[j]][i]['rank'] %></span>
+			</div>
+			<div class="follow">
+				<img class="<%= thisID + ' ' + addshowadd %>" src="<%= imgsrc %>" alt="">
+			</div>
+		</li>
+
+	<%	}}	%>
+
+	</ul>
+</div>
+<div style="float:left;width:55%;margin-left:15px;">
+	<span style="font-size:20px;">排序</span>
+	<input type="radio" name="sots" value="googrk" class="sortbuton">GoogleRank
+	<input type="radio" name="sots" value="likes" class="sortbuton">FB Likes
+</div>
+<div>
+	<button class="lightboxbtn pgbuton" style="font-size:15px" id="uppage" onclick="fbsrhpgs(nowpgs-1);">上一頁</button>
+	<span style="font-size:20px;" id="thepages"></span>
+	<button class="lightboxbtn pgbuton" style="font-size:15px" id="dnpage" onclick="fbsrhpgs(nowpgs+1);">下一頁</button>
+</div>

@@ -1,0 +1,33 @@
+.GroupInfoData{
+	text-align: center;
+	font-size: 30px;
+}
+
+.subWHbox{
+	width:33%;
+	height: 100%;
+	float: left;
+}
+
+.subWHHD{
+	height: 7%;
+	width: 100%;
+	padding: 10px;
+}
+.subWHCntbox{
+	height:93%;
+	width:100%;
+	overflow:hidden;
+}
+.subWHCnt{
+	width:100%;
+	height:100%;
+	padding-right: 18px;
+	box-sizing: content-box;
+	overflow-y: scroll;
+}
+
+.materialHD,
+.materialBox{
+	background-color: #CCC;
+}

@@ -1,0 +1,108 @@
+html, body {
+	margin:0;
+	padding:0;
+	width:100%;
+	height:100%;
+}
+div{
+	box-sizing: border-box;
+}
+
+.menubar{
+	z-index: 2;
+	height: 70px;
+	width:100%;
+	position: fixed;
+	top:0px;
+	background-color: #777;
+	box-shadow: 0 0px 10px 5px #CCC;
+}
+
+.menutg{
+	font-size: 30px;
+	height: 50px;
+	margin: 10px 5px;
+	padding: 5px;
+	float: left;
+	color: #DDD;
+}
+.menubtn{
+	border-radius: 8px;
+	padding: 5px 20px;
+}
+.menubtn:hover{
+	background-color: #666666;
+}
+.moneynumber{
+	background-color: #FFF;
+	color: #666;
+	width: 200px;
+	border-radius: 7px;
+	text-align: right;
+	padding: 0 5px;
+	box-shadow: inset 3px 3px 3px 0px #555;
+}
+
+.toppadding{
+	height:70px;
+	width:100%;
+}
+
+.factoryBox{
+	z-index: 1;
+	width:100%;
+}
+
+.popMenuBox{
+	z-index: 3;
+	position: absolute;
+	top:0px;
+	left:0px;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(100,100,100,0.4);
+
+	display: none;
+}
+
+.popMenu{
+	width: 80%;
+	height: 80%;
+	position: absolute;
+	top:10%;
+	left:10%;
+	background-color: #E0E0E0;
+	border-radius: 10px;
+	padding:10px;
+}
+
+.menuTitle{
+	height:8%;
+	font-weight: 800;
+}
+.menuTitle > div{
+	height:100%;
+	float: left;
+	padding:3px;
+	font-size: 27px;
+	color: #555;
+}
+.mtContent{
+	width:90%;
+}
+.closeMenu{
+	text-align: right;
+	width:10%;
+}
+.closeMenu > i{
+	padding:2px;
+	border-radius: 10px;
+}
+.closeMenu > i:hover{
+	background-color: #CCC;
+}
+
+.menuBody{
+	background-color: #fff;
+	height:92%;
+}
