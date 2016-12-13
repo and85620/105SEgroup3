@@ -7,27 +7,144 @@
 	width:33%;
 	height: 100%;
 	float: left;
-}
-
-.subWHHD{
-	height: 7%;
-	width: 100%;
-	padding: 10px;
-}
-.subWHCntbox{
-	height:93%;
-	width:100%;
 	overflow:hidden;
 }
-.subWHCnt{
-	width:100%;
+.subWHHD{
+	height: 50px;
+	width: 100%;
+	padding: 10px;
+	text-align: center;
+	font-size: 25px;
+}
+.subWHCntbox, .InStore{
 	height:100%;
+	width:100%;
 	padding-right: 18px;
 	box-sizing: content-box;
 	overflow-y: scroll;
+}
+.subWHCnt{
+	width:100%;
+	/*box-shadow: inset 5px 0px 6px 2px #999;*/
 }
 
 .materialHD,
 .materialBox{
 	background-color: #CCC;
 }
+
+.subWHitem{
+	width:100%;
+	height: 50px;
+	font-size: 20px;
+	padding: 12px 15px;
+	background-color: rgba(222,222,222,0.2);
+}
+.subWHitem:hover{
+	background-color: rgba(100,100,100,0.2);
+}
+.subWHitem > div{
+	display: inline-block;
+	height:100%;
+}
+
+.subWHitemName{
+	width:80%;
+}
+.subWHitemNum{
+	width:15%;
+}
+
+
+.Storebox{
+	height:100%;
+	width:100%;
+	background-color: #E0E0E0;
+}
+.StoreHDBar{
+	height:10%;
+	width:100%;
+}
+.StoreHD{
+	font-size: 20px;
+	height:100%;
+	width:15%;
+	text-align: center;
+	padding:1%;
+	float:left;
+	background-color: #BBB;
+	border-top-left-radius:20px;
+	border-top-right-radius:20px;
+}
+.StoreHD:hover{background-color: #E0E0E0;}
+.StoreHD:active{
+	color:#fff;
+	background-color: #666;
+}
+.ReMoneyBox{
+	font-size: 25px;
+	height: 100%;
+	margin-left: 30px;
+	float:left;
+	width:20%;
+}
+.ReMoneyPadding{
+	height:20%;
+	width:100%;
+}
+.ReMoney{
+	height:60%;
+	width:100%;
+}
+.ActiveStore{
+	background-color: #E0E0E0;
+	font-weight: 800;
+	font-size: 25px;
+}
+.SCheckout{
+	font-size: 25px;
+	height: 70%;
+	width:15%;
+	float: right;
+	margin-right: 50px;
+	text-align: center;
+	border-radius: 10px;
+	background-color: rgb(100,222,170);
+}
+.SCheckout:hover{background-color: rgb(80,250,200);cursor: pointer;}
+.SCheckout:active{box-shadow: inset 3px 3px 3px 0px #555;}
+.InStorebox{
+	height:90%;
+	width:100%;
+	overflow:hidden;
+}
+.StoreItem, .StoreItemTitle{
+	width:100%;
+	height: 60px;
+	font-size: 20px;
+	margin: 10px 0;
+}
+.StoreItem:hover , .StoreItemTitle{
+	background-color: #777;
+	color:#E0E0E0;
+}
+.StoreItem>div , .StoreItemTitle>div{
+	height:100%;
+	padding: 15px;
+	float: left;
+}
+.StoreItemName{
+	width:55%;
+}
+.StoreItemValue, .StoreItemNum, .StoreSetNum{
+	width:15%;
+}
+.BuyingBox{
+	width:33%;
+	height:100%;
+	float: left;
+	text-align: center;
+}
+.STminus:hover, .STplus:hover{color: #AAA;}
+.STminus:active, .STplus:active{color: #FFF;}
+

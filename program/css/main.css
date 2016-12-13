@@ -1,8 +1,10 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300);
 html, body {
 	margin:0;
 	padding:0;
 	width:100%;
 	height:100%;
+	font-family:  'Open Sans', sans-serif,微軟正黑體;
 }
 div{
 	box-sizing: border-box;
@@ -19,7 +21,7 @@ div{
 }
 
 .menutg{
-	font-size: 30px;
+	font-size: 25px;
 	height: 50px;
 	margin: 10px 5px;
 	padding: 5px;
@@ -32,11 +34,12 @@ div{
 }
 .menubtn:hover{
 	background-color: #666666;
+	cursor: pointer;
 }
 .moneynumber{
 	background-color: #FFF;
 	color: #666;
-	width: 200px;
+	width: 180px;
 	border-radius: 7px;
 	text-align: right;
 	padding: 0 5px;
@@ -66,11 +69,11 @@ div{
 }
 
 .popMenu{
-	width: 80%;
+	width: 76%;
 	height: 80%;
 	position: absolute;
 	top:10%;
-	left:10%;
+	left:12%;
 	background-color: #E0E0E0;
 	border-radius: 10px;
 	padding:10px;
@@ -100,6 +103,7 @@ div{
 }
 .closeMenu > i:hover{
 	background-color: #CCC;
+	cursor: pointer;
 }
 
 .menuBody{

@@ -6,16 +6,17 @@ for(var i=0;i<3;i++)
 %>
 
 <div class="subWHbox <%=classtype[i]%>Box">
-	<div class="subWHHD <%=classtype[i]%>HD"><%=headname[i]%></div>
 	<div class="subWHCntbox">
+	<div class="subWHHD <%=classtype[i]%>HD"><%=headname[i]%></div>
 	<div class="subWHCnt <%=classtype[i]%>Cnt">
 		<%
 		for(var j=0;j<inpData[classtype[i]].length;j++)
 		{
 		%>
-		
-			<%=inpData[classtype[i]][j].name%> --- <%=inpData[classtype[i]][j].number%><br/>
-
+			<div class="subWHitem">
+			<div class="subWHitemName"><%=inpData[classtype[i]][j].name%></div>
+			<div class="subWHitemNum"><%=inpData[classtype[i]][j].number%></div>
+			</div>
 		<% } %>
 	</div>
 	</div>

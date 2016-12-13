@@ -1,0 +1,21 @@
+<div class="StoreItemTitle">
+	<div class="StoreItemName">名稱</div>
+	<div class="StoreItemValue">價格</div>
+	<div class="StoreItemNum"></div>
+	<div class="StoreSetNum"></div>
+</div>
+<%
+for(var i=0;i<inpData.length;i++)
+{
+%>
+<div class="StoreItem StoreItem<%=inpData[i].id%>" idata="<%=inpData[i].id%>">
+	<div class="StoreItemName"><%=inpData[i].name %></div>
+	<div class="StoreItemValue"><%=inpData[i].value %></div>
+	<div class="StoreItemNum"></div>
+	<div class="StoreSetNum">
+		<div class="BuyingBox STminus"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
+		<div class="BuyingBox STnum">0</div>
+		<div class="BuyingBox STplus"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+	</div>
+</div>
+<% } %>
