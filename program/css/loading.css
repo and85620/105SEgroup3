@@ -1,0 +1,31 @@
+.loading {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    border: 1rem solid rgba(100,100,100, 0.5);
+    border-top-color: rgba(100,100,100,0);
+    animation: spin 1s infinite linear;
+    border-style: double;
+    border-width: 2rem;
+}
+.loading-hourglass{
+    display:block;
+    background:none;
+    margin: 10% auto;
+    width:40%;
+    height:80%;
+    animation:hourglass 2s infinite linear;
+}
+.loading-outer{fill: rgba(100,100,100, 0.7);}
+.loading-middle{fill:none;}
+
+@keyframes spin {
+  0% {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
+}
+
+@keyframes hourglass{
+    0%{transform:rotate(0deg);}
+    50%{transform:rotate(-360deg);}
+    100%{transform:rotate(-540deg);}
+}

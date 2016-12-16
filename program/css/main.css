@@ -9,6 +9,9 @@ html, body {
 div{
 	box-sizing: border-box;
 }
+textarea:focus, input:focus{
+    outline: none;
+}
 
 .menubar{
 	z-index: 2;
@@ -58,7 +61,7 @@ div{
 
 .popMenuBox{
 	z-index: 3;
-	position: absolute;
+	position: fixed;
 	top:0px;
 	left:0px;
 	width: 100%;
@@ -109,4 +112,38 @@ div{
 .menuBody{
 	background-color: #fff;
 	height:92%;
+}
+
+.MachineBox{
+	width:300px;
+	height:300px;
+	float: left;
+	padding:5px;
+	margin:15px 20px;
+	border-radius: 15px;
+	background-color: rgba(150,150,150,0.2);
+	box-shadow: 3px 3px 3px 0px #888;
+}
+.MachineBox:hover{background-color: rgba(150,150,150,0);}
+.Mname{
+	width:100%;
+	height:10%;
+}
+.Mproduct{
+	height:20%;
+	width:100%;
+}
+.Mrestime{
+	height:20%;
+	width:100%;
+}
+.Mstatus{
+	display: block;
+	margin: 0 auto;
+	width:50%;
+	height:50%;
+}
+.MstatusWorking{
+	height:100%;
+	width:100%;
 }

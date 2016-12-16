@@ -1,0 +1,44 @@
+<!-- Search bar!!!!! -->
+<div class="BomBom">
+<div class="BomSearchBar">
+	<input type="text" class="BomTextSearch moneynumber" placeholder="搜尋" />
+</div>
+
+<div class="BomListBox">
+
+<div class="BomItem">
+	<div class="BomProduct">名稱</div>
+	<div class="Bomdetail">
+		<div class="BomMaterials">
+			<div class="BomMName">材料</div>
+			<div class="BomMNum">數量</div>
+		</div>
+	</div>
+</div>
+
+<%
+for(var i=0;i<bom.length;i++)
+{
+%>
+
+<div class="BomItem" idata="<%=bom[i].id%>">
+	<div class="BomProduct"><%=bom[i].name%></div>
+	<div class="Bomdetail">
+		<%
+			for(var j=0;j<bom[i].list.length;j++)
+			{
+		%>
+
+		<div class="BomMaterials">
+			<div class="BomMName" idata="<%=bom[i].list[j].id%>"><%=bom[i].list[j].name%></div>
+			<div class="BomMNum"><%=bom[i].list[j].num%></div>
+		</div>
+
+		<% } %>
+	</div>
+</div>
+
+<% } %>
+
+</div>
+</div>

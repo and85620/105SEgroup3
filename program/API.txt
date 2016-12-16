@@ -1,0 +1,12 @@
+API:
+Player data
+Buying list
+Selling list
+Bom list
+Warehouse data
+
+BuyThing
+SellThing
+
+Machine list and Machine status
+_Product can do

@@ -1,0 +1,24 @@
+<%
+for(var i=0;i<inpData.length;i++)
+{
+%>
+
+<div class="MachineBox" idata="<%=inpData[i].id%>">
+	<div class="Mname"><%=inpData[i].Name%></div>
+	<div class="Mproduct"><%=inpData[i].produce%></div>
+	<div class="Mstatus" idata="<%=inpData[i].status%>">
+		<% 
+			var toStatus = "";
+			if(!inpData[i].status)toStatus = "READY";
+			else toStatus = "<div class='MstatusWorking'></div>";
+		%>
+
+		<%=toStatus%>
+		
+	</div>
+	<div class="Mrestime"><%=inpData[i].restime%></div>
+</div>
+
+<%
+}
+%>

@@ -2,7 +2,7 @@
 // Add discription of each thing??
 var SampleWarehousedatas = {inpData:{
 	machine:[
-	{name:'M8Impact', number:1}
+	{name:'M8Impact', number:2}
 	],
 	material:[
 	{name:'麵粉', number:1},
@@ -56,7 +56,8 @@ var SampleBomList = {bom:[
 			{id:1, name:'細砂糖', num:3},
 			{id:2, name:'雞蛋', num:5},
 			{id:25,name:'水', num:1}
-		]
+		],
+		time:180
 	},
 	{
 		id:4,
@@ -68,9 +69,21 @@ var SampleBomList = {bom:[
 			{id:2, name:'雞蛋', num:2},
 			{id:30,name:'起司粉', num:1},
 			{id:31,name:'鮮奶油', num:1}
-		]
+		],
+		time:222
 }
 ]};
+
+var SampleMachine = {inpData:[
+	{id:1, Name:'M8Impact', status:0, produce:'', restime:0},
+	{id:2, Name:'M8Impact', status:1, produce:'牛奶起司捲', restime:128},
+	{id:3, Name:'M8Impact', status:0, produce:'', restime:0},
+	{id:4, Name:'M8Impact', status:0, produce:'', restime:0},
+	{id:5, Name:'M8Impact', status:1, produce:'巧克力蛋糕', restime:60},
+	{id:6, Name:'M8Impact', status:1, produce:'牛奶起司捲', restime:110}
+]};
+
+
 var SamplePersondatas = {name:'TestPlay', id:1, Money:5000};//add more information??
 
 
@@ -78,7 +91,7 @@ var SamplePersondatas = {name:'TestPlay', id:1, Money:5000};//add more informati
 // API 還需要能夠查詢目前能製作的產品 bom表
 
 
-var moneypaid = 0;
+var money_paid_receive = 0;
 
 //ejs render
 function PageRender(ejsname,edata,target)
@@ -89,13 +102,16 @@ function PageRender(ejsname,edata,target)
 
 function MenuTitle(Mname){$('.mtContent').html(Mname);}
 
+function popmenuUP()
+{
+	$('.menuBody').html('');
+	$('.mtContent').html('');
+	$('.popMenuBox').fadeIn(250);
+}
+
 function loadmenu()
 {
-	$('.menubtn').click(function(event) {
-		$('.menuBody').html('');
-		$('.mtContent').html('');
-		$('.popMenuBox').fadeIn(250);
-	});
+	$('.menubtn').click(function(event) {popmenuUP();});
 
 	$('.GroupInfo').click(function(event)
 	{
@@ -116,8 +132,39 @@ function loadplayer()
 	//end ajax
 }
 
+function loadmachine()
+{
+	//ajax: load machine data and set timer
+	PageRender('Machine', SampleMachine, $('.factoryBox'));
+	PageRender('loading', {}, $('.MstatusWorking'));
+	$('.MachineBox').click(function(event) {
+		if( parseInt($(this).find('.Mstatus').attr('idata')) == 0)
+			MachineSetJob(parseInt($(this).attr('idata')));
+	});
+	//end ajax
+}
+
+function MachineSetJob(Mid)
+{
+	popmenuUP();
+	//ajax: pop menu to load the Can-do bom list
+	PageRender('Cookbook', SampleBomList, $('.menuBody'));
+	SearchBomlist();
+	MenuTitle('製造產品');
+	//end ajax
+}
+
+function SearchBomlist()
+{
+	$('.BomTextSearch').bind("propertychange change click input paste",function(event){
+		//search bom list
+		//console.log($(this).val());
+	});
+}
+
 function loadStore(stype)
 {
+	money_paid_receive = 0;
 	//ajax: load player's data
 	PageRender('Store', SamplePersondatas, $('.menuBody'));
 	$('.BuyIn').click(function(event) {loadStore(0);});
@@ -126,17 +173,25 @@ function loadStore(stype)
 	if(stype == 0)	//0 : buy
 	{
 		$('.BuyIn').addClass('ActiveStore');
+		$('.StoreCountMon').addClass('tRed');
 
 		//ajax: load the product list
 		PageRender('BuyIn', SampleStoredatasBuy, $('.InStore'));
+		$('.STplus').click(function(event) {StoreCheckMoney(1,"Buying","StoreItem"+$(this).parent().parent().attr('idata'));});
+		$('.STminus').click(function(event) {StoreCheckMoney(-1,"Buying","StoreItem"+$(this).parent().parent().attr('idata'));});
+		$('.SCheckout').click(function(event) {StoreCheckout(0);});
 		//end ajax
 	}
 	else	//1 : sell
 	{
 		$('.SellOut').addClass('ActiveStore');
+		$('.StoreCountMon').addClass('tGreen');
 
 		//ajax: load the product list
 		PageRender('SellOut', SampleStoredatasSell, $('.InStore'));
+		$('.STplus').click(function(event) {StoreCheckMoney(1,"Selling","StoreItem"+$(this).parent().parent().attr('idata'));});
+		$('.STminus').click(function(event) {StoreCheckMoney(-1,"Selling","StoreItem"+$(this).parent().parent().attr('idata'));});
+		$('.SCheckout').click(function(event) {StoreCheckout(1);});
 		//end ajax
 	}
 	MenuTitle('店鋪');
@@ -147,6 +202,7 @@ function loadCookbook()
 {
 	//ajax: load all of product's bom list
 	PageRender('Cookbook', SampleBomList, $('.menuBody'));
+	SearchBomlist();
 	MenuTitle('食譜');
 	//end ajax
 }
@@ -159,9 +215,66 @@ function loadWarehouse()
 	//end ajax
 }
 
+function ChgMoneyValue(price,TagName){$('.'+TagName).html(price.toString()+' <i class="fa fa-usd" aria-hidden="true"></i>');}
+
+function StoreCheckMoney(val,STtype,CTagName)
+{
+	var numofitem = parseInt($('.'+CTagName).find(".STnum").text());
+	if((numofitem > 0 || val > 0) && StoreSizeChk(val,STtype,CTagName,numofitem))
+	{
+		numofitem+=val;
+		ChgMoneyValue(money_paid_receive,'StoreCountMon');
+	}
+	$('.'+CTagName).find(".STnum").text(numofitem.toString());
+}
+
+function StoreSizeChk(val,STtype,CTagName,itemnumber)
+{
+	var ThePrice = parseInt($('.'+CTagName).find(".StoreItemValue").text());
+	if(STtype == "Buying")	//if STtype is Buy, check the price sum	
+	{
+		var nowMoney = parseInt($($('.moneynumber')[0]).text());
+		if( money_paid_receive+ThePrice*val > nowMoney)return false;
+	}
+	else //if STtype is Sell,check the number of the object
+	{
+		var TheNums = parseInt($('.'+CTagName).find(".StoreItemNum").text());
+		if(itemnumber+val > TheNums)return false;
+	}
+	money_paid_receive += ThePrice*val;
+	return true;
+}
+
+function StoreCheckout(ctype)
+{
+	if(ctype == 0)	//buy
+	{
+		// ajax: send buy list
+		//end ajax
+	}
+	else	//sell
+	{
+		// ajax: send sell list
+		//end ajax
+	}
+//also set the things number to 0
+
+
+//tmp
+var nowMoney = parseInt($($('.moneynumber')[0]).text());
+var thputMoney = nowMoney + money_paid_receive*(ctype?1:-1);
+ChgMoneyValue(thputMoney, 'moneynumber');
+ChgMoneyValue(0, 'StoreCountMon');
+//tmp
+
+}
+
+
+
 
 $(document).ready(function() {
 	loadplayer();
+	loadmachine();
 
 	$('.closeMenu > i').click(function(event) {
 		event.stopPropagation();

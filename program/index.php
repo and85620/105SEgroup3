@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="css/font-awesome-4.3.0/css/font-awesome.min.css"/>
 	<link rel="stylesheet" type="text/css" href="css/main.css"/>
 	<link rel="stylesheet" type="text/css" href="css/menu.css"/>
+	<link rel="stylesheet" type="text/css" href="css/loading.css"/>
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400' rel='stylesheet' type='text/css'/>
 </head>
 <body>
@@ -19,7 +20,7 @@
 
 	<div class="toppadding"></div>
 	<div class="factoryBox">
-			<!-- check API (SQL) and add machine(s) from machine.ejs -->
+			<!-- check API (SQL) and add machine(s) from Machine.ejs -->
 	</div>
 
 
