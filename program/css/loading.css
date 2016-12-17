@@ -14,7 +14,7 @@
     margin: 10% auto;
     width:40%;
     height:80%;
-    animation:hourglass 2s infinite linear;
+    animation:hourglass 1.25s infinite linear;
 }
 .loading-outer{fill: rgba(100,100,100, 0.7);}
 .loading-middle{fill:none;}
@@ -26,6 +26,6 @@
 
 @keyframes hourglass{
     0%{transform:rotate(0deg);}
-    50%{transform:rotate(-360deg);}
+    80%{transform:rotate(-360deg);}
     100%{transform:rotate(-540deg);}
 }

@@ -180,27 +180,36 @@
 	box-sizing: content-box;
 	overflow-y: scroll;
 }
-.BomItem{
+.BomItem, .BomListBoxHD{
 	width:100%;
 	display: inline-block;
 	margin: 5px 0;
 }
-.BomItem:hover{
+.BomItem:hover , .BomListBoxHD{
 	background-color: rgba(150,150,150,0.6);
 }
-.BomProduct , .BomMNum{
+.BomProduct{
+	width:20%;
+}
+.BomPTime{
+	width:20%;
+}
+.BomMNum{
 	width:30%;
 }
-.Bomdetail , .BomMName{
+.Bomdetail{
+	width:60%;
+}
+.BomMName{
 	width:70%;
 }
-.Bomdetail, .BomProduct, .BomMNum, .BomMName{
+.Bomdetail, .BomProduct, .BomPTime, .BomMNum, .BomMName{
 	float: left;
 }
 .BomMaterials{
 	width:100%;
 	height:35px;
 }
-.BomProduct, .BomMaterials{
+.BomProduct, .BomPTime, .BomMaterials{
 	padding: 7px;
 }

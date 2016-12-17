@@ -5,8 +5,12 @@ Selling list
 Bom list
 Warehouse data
 
-BuyThing
-SellThing
+Buy&Sell checkout
+	input: store.js , line 45
 
-Machine list and Machine status
-_Product can do
+Machine list + Machine status
+BomList that player can produce
+Check a machine's rest time
+	input: PID
+Machine start to produce product
+	input: PID , MID

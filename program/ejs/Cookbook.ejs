@@ -6,8 +6,9 @@
 
 <div class="BomListBox">
 
-<div class="BomItem">
+<div class="BomListBoxHD">
 	<div class="BomProduct">名稱</div>
+	<div class="BomPTime">製作時間</div>
 	<div class="Bomdetail">
 		<div class="BomMaterials">
 			<div class="BomMName">材料</div>
@@ -23,6 +24,7 @@ for(var i=0;i<bom.length;i++)
 
 <div class="BomItem" idata="<%=bom[i].id%>">
 	<div class="BomProduct"><%=bom[i].name%></div>
+	<div class="BomPTime"><%=bom[i].time%></div>
 	<div class="Bomdetail">
 		<%
 			for(var j=0;j<bom[i].list.length;j++)

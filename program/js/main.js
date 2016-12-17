@@ -100,7 +100,10 @@ function PageRender(ejsname,edata,target)
 	target.html(ejsdata);
 }
 
-function MenuTitle(Mname){$('.mtContent').html(Mname);}
+function MenuTitle(Mname)
+{
+	$('.mtContent').html(Mname);
+}
 
 function popmenuUP()
 {
@@ -108,6 +111,15 @@ function popmenuUP()
 	$('.mtContent').html('');
 	$('.popMenuBox').fadeIn(250);
 }
+
+function ChgMoneyValue(price,TagName)
+{
+	$('.'+TagName).html(price.toString()+' <i class="fa fa-usd" aria-hidden="true"></i>');
+}
+
+
+
+
 
 function loadmenu()
 {
@@ -124,7 +136,7 @@ function loadmenu()
 	$('.Warehouse').click(function(event){loadWarehouse();});
 }
 
-function loadplayer()
+function loadmenubar()
 {
 	//ajax: load player's data
 	PageRender('MenuBar', SamplePersondatas, $('.menubar'));
@@ -132,41 +144,13 @@ function loadplayer()
 	//end ajax
 }
 
-function loadmachine()
-{
-	//ajax: load machine data and set timer
-	PageRender('Machine', SampleMachine, $('.factoryBox'));
-	PageRender('loading', {}, $('.MstatusWorking'));
-	$('.MachineBox').click(function(event) {
-		if( parseInt($(this).find('.Mstatus').attr('idata')) == 0)
-			MachineSetJob(parseInt($(this).attr('idata')));
-	});
-	//end ajax
-}
-
-function MachineSetJob(Mid)
-{
-	popmenuUP();
-	//ajax: pop menu to load the Can-do bom list
-	PageRender('Cookbook', SampleBomList, $('.menuBody'));
-	SearchBomlist();
-	MenuTitle('製造產品');
-	//end ajax
-}
-
-function SearchBomlist()
-{
-	$('.BomTextSearch').bind("propertychange change click input paste",function(event){
-		//search bom list
-		//console.log($(this).val());
-	});
-}
-
 function loadStore(stype)
 {
 	money_paid_receive = 0;
 	//ajax: load player's data
-	PageRender('Store', SamplePersondatas, $('.menuBody'));
+	PageRender('Store', {}, $('.menuBody'));
+	ChgMoneyValue(SamplePersondatas.Money, 'moneynumber');
+	$('.Storebox').attr('stype',stype);
 	$('.BuyIn').click(function(event) {loadStore(0);});
 	$('.SellOut').click(function(event) {loadStore(1);});
 	$('.StoreHD').removeClass('ActiveStore');
@@ -215,65 +199,38 @@ function loadWarehouse()
 	//end ajax
 }
 
-function ChgMoneyValue(price,TagName){$('.'+TagName).html(price.toString()+' <i class="fa fa-usd" aria-hidden="true"></i>');}
-
-function StoreCheckMoney(val,STtype,CTagName)
+function loadmachine()
 {
-	var numofitem = parseInt($('.'+CTagName).find(".STnum").text());
-	if((numofitem > 0 || val > 0) && StoreSizeChk(val,STtype,CTagName,numofitem))
-	{
-		numofitem+=val;
-		ChgMoneyValue(money_paid_receive,'StoreCountMon');
-	}
-	$('.'+CTagName).find(".STnum").text(numofitem.toString());
+	//ajax: load machine data and set timer
+	PageRender('Machine', SampleMachine, $('.factoryBox'));
+	PageRender('loading', {}, $('.MstatusWorking'));
+	$.each($('.MachineBox'), function(index, el) {
+		if( parseInt($(this).find('.Mstatus').attr('idata')) == 0)
+			$(el).click(function(event){MachineFindJob(parseInt($(this).attr('idata')));});
+		else MachineTimer($(el));
+	});
+	//end ajax
 }
 
-function StoreSizeChk(val,STtype,CTagName,itemnumber)
+
+
+
+function SearchBomlist()
 {
-	var ThePrice = parseInt($('.'+CTagName).find(".StoreItemValue").text());
-	if(STtype == "Buying")	//if STtype is Buy, check the price sum	
-	{
-		var nowMoney = parseInt($($('.moneynumber')[0]).text());
-		if( money_paid_receive+ThePrice*val > nowMoney)return false;
-	}
-	else //if STtype is Sell,check the number of the object
-	{
-		var TheNums = parseInt($('.'+CTagName).find(".StoreItemNum").text());
-		if(itemnumber+val > TheNums)return false;
-	}
-	money_paid_receive += ThePrice*val;
-	return true;
+	$('.BomTextSearch').bind("propertychange change click input paste",function(event){
+		//search bom list
+		//console.log($(this).val());
+	});
 }
 
-function StoreCheckout(ctype)
-{
-	if(ctype == 0)	//buy
-	{
-		// ajax: send buy list
-		//end ajax
-	}
-	else	//sell
-	{
-		// ajax: send sell list
-		//end ajax
-	}
-//also set the things number to 0
 
 
-//tmp
-var nowMoney = parseInt($($('.moneynumber')[0]).text());
-var thputMoney = nowMoney + money_paid_receive*(ctype?1:-1);
-ChgMoneyValue(thputMoney, 'moneynumber');
-ChgMoneyValue(0, 'StoreCountMon');
-//tmp
-
-}
 
 
 
 
 $(document).ready(function() {
-	loadplayer();
+	loadmenubar();
 	loadmachine();
 
 	$('.closeMenu > i').click(function(event) {

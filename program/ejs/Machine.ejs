@@ -3,7 +3,7 @@ for(var i=0;i<inpData.length;i++)
 {
 %>
 
-<div class="MachineBox" idata="<%=inpData[i].id%>">
+<div class="MachineBox MachineBox<%=inpData[i].id%>" idata="<%=inpData[i].id%>">
 	<div class="Mname"><%=inpData[i].Name%></div>
 	<div class="Mproduct"><%=inpData[i].produce%></div>
 	<div class="Mstatus" idata="<%=inpData[i].status%>">
