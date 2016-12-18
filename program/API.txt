@@ -14,3 +14,6 @@ Check a machine's rest time
 	input: PID
 Machine start to produce product
 	input: PID , MID
+
+Search Bom Keyword
+	input: keyword

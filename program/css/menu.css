@@ -154,8 +154,8 @@
 	float: left;
 	text-align: center;
 }
-.STminus:hover, .STplus:hover{color: #AAA;}
-.STminus:active, .STplus:active{color: #FFF;}
+.STminus:hover, .STplus:hover, .STminus10:hover, .STplus10:hover{color: #AAA;}
+.STminus:active, .STplus:active, .STminus10:active, .STplus10:active{color: #FFF;}
 
 .BomBom{
 	width:100%;

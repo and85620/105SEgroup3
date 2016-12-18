@@ -217,9 +217,19 @@ function loadmachine()
 
 function SearchBomlist()
 {
-	$('.BomTextSearch').bind("propertychange change click input paste",function(event){
+	$('.BomTextSearch').bind("propertychange change input paste",function(event){
 		//search bom list
-		//console.log($(this).val());
+		//$(this).val()
+		if($(this).val() == '')$('.BomItem').show();
+		else
+		{
+			//ajax: search keyword
+			var result_id = [1,2,3];
+			$('.BomItem').hide();
+			for(var i=0;i<result_id.length;i++)
+				$('.BomItem'+result_id[i]).show();
+			//end ajax
+		}
 	});
 }
 
