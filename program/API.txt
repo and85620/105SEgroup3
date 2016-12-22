@@ -11,7 +11,7 @@ Buy&Sell checkout
 Machine list + Machine status
 BomList that player can produce
 Check a machine's rest time
-	input: PID
+	input: MID
 Machine start to produce product
 	input: PID , MID
 

@@ -40,11 +40,12 @@ SamplePersondatas.Money += money_paid_receive*(ctype?1:-1);
 	$.each($('.StoreItem'), function(index, el) {
 		var elNum = parseInt($(el).find('.STnum').text());
 		if(elNum > 0)
-			storecar.push({ id: $(el).attr('idata'), number: elNum});
+			storecar.push({ id: parseInt($(el).attr('idata')), number: elNum});
 	});
-	var sendingCheckout = { type:ctype, list:storecar };
+	var sendingCheckout = { type:ctype, list:JSON.stringify(storecar) };
 	// ajax: send checkout request list
 		//success: reload the store
 		loadStore(parseInt($('.Storebox').attr('stype')));
+		loadmachine();
 	//end ajax
 }
