@@ -139,8 +139,15 @@ function loadmenu()
 function loadmenubar()
 {
 	//ajax: load player's data
-	PageRender('MenuBar', SamplePersondatas, $('.menubar'));
-	loadmenu();
+    $.ajax({
+        url:"API/controller.php",
+        type:"GET",
+        data:{act:'playerdata'}
+    }).done(function(Pdata){
+        var Pdatas = JSON.parse(Pdata);
+        PageRender('MenuBar', Pdatas, $('.menubar'));
+        loadmenu();
+    });
 	//end ajax
 }
 

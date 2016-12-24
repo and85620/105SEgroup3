@@ -15,11 +15,7 @@ function MachineTimer(Mtag)
 	setTimeout(
 		function(){
 			//ajax: check this machine's time
-
-//tmp tmp tmp tmp tmp
-var timess = parseInt(Mtag.children('.Mrestime').text());
-//tmp tmp tmp tmp tmp
-
+			var timess = parseInt(Mtag.children('.Mrestime').text());
 			//if still have time, then set the text and timer
 			if(timess>0)
 			{
@@ -52,8 +48,10 @@ function MachineSetJob(prodt,MID)
 
 function MachineFinJob(Mtag)
 {
+	//ajax: told sql this job finish
 	Mtag.children('.Mstatus').attr('idata',0).html('READY');
 	Mtag.children('.Mproduct').text('');
 	Mtag.click(function(event){MachineFindJob(parseInt(Mtag.attr('idata')));});
+	//end ajax
 }
 
