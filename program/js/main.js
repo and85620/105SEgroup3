@@ -138,85 +138,91 @@ function loadmenu()
 
 function loadmenubar()
 {
-	//ajax: load player's data
-    $.ajax({
-        url:"API/controller.php",
-        type:"GET",
-        data:{act:'playerdata'}
-    }).done(function(Pdata){
-        var Pdatas = JSON.parse(Pdata);
-        PageRender('MenuBar', Pdatas, $('.menubar'));
-        loadmenu();
-    });
-	//end ajax
+	$.ajax({
+		url:"API/controller.php",
+		type:"GET",
+		data:{act:'playerdata'}
+	}).done(function(Pdata){
+		var Pdatas = JSON.parse(Pdata);
+		PageRender('MenuBar', Pdatas, $('.menubar'));
+		loadmenu();
+	});
 }
 
 function loadStore(stype)
 {
 	money_paid_receive = 0;
-	//ajax: load player's data
-	PageRender('Store', {}, $('.menuBody'));
-	ChgMoneyValue(SamplePersondatas.Money, 'moneynumber');
-	$('.Storebox').attr('stype',stype);
-	$('.BuyIn').click(function(event) {loadStore(0);});
-	$('.SellOut').click(function(event) {loadStore(1);});
-	$('.StoreHD').removeClass('ActiveStore');
-	if(stype == 0)	//0 : buy
-	{
-		$('.BuyIn').addClass('ActiveStore');
-		$('.StoreCountMon').addClass('tRed');
-
-		//ajax: load the product list
-		PageRender('BuyIn', SampleStoredatasBuy, $('.InStore'));
-		$('.STplus').click(function(event) {StoreCheckMoney(1,"Buying","StoreItem"+$(this).parent().parent().attr('idata'));});
-		$('.STminus').click(function(event) {StoreCheckMoney(-1,"Buying","StoreItem"+$(this).parent().parent().attr('idata'));});
-		$('.SCheckout').click(function(event) {StoreCheckout(0);});
-		//end ajax
-	}
-	else	//1 : sell
-	{
-		$('.SellOut').addClass('ActiveStore');
-		$('.StoreCountMon').addClass('tGreen');
-
-		//ajax: load the product list
-		PageRender('SellOut', SampleStoredatasSell, $('.InStore'));
-		$('.STplus').click(function(event) {StoreCheckMoney(1,"Selling","StoreItem"+$(this).parent().parent().attr('idata'));});
-		$('.STminus').click(function(event) {StoreCheckMoney(-1,"Selling","StoreItem"+$(this).parent().parent().attr('idata'));});
-		$('.SCheckout').click(function(event) {StoreCheckout(1);});
-		//end ajax
-	}
-	MenuTitle('店鋪');
-	//end ajax
+	$.ajax({
+		url:"API/controller.php",
+		type:"GET",
+		data:{act:'playerdata'}
+	}).done(function(Pdata){
+		var Pdatas = JSON.parse(Pdata);
+		PageRender('Store', {}, $('.menuBody'));
+		ChgMoneyValue(Pdatas.Money, 'moneynumber');
+		$('.Storebox').attr('stype',stype);
+		$('.BuyIn').click(function(event) {loadStore(0);});
+		$('.SellOut').click(function(event) {loadStore(1);});
+		$('.StoreHD').removeClass('ActiveStore');
+		if(stype == 0)	//0 : buy
+		{
+			$('.BuyIn').addClass('ActiveStore');
+			$('.StoreCountMon').addClass('tRed');
+			SetBuyNumber("???????", 0);
+		}
+		else	//1 : sell
+		{
+			$('.SellOut').addClass('ActiveStore');
+			$('.StoreCountMon').addClass('tGreen');
+			SetBuyNumber("???????", 1);
+		}
+		MenuTitle('店鋪');
+	});
 }
 
 function loadCookbook()
 {
-	//ajax: load all of product's bom list
-	PageRender('Cookbook', SampleBomList, $('.menuBody'));
-	SearchBomlist();
-	MenuTitle('食譜');
-	//end ajax
+	$.ajax({
+		url:"API/controller.php",
+		type:"GET",
+		data:{act:'??????'}
+	}).done(function(BBList){
+		var BBList = JSON.parse(BBList);
+		PageRender('Cookbook', BBList, $('.menuBody'));
+		SearchBomlist();
+		MenuTitle('食譜');
+	});
 }
 
 function loadWarehouse()
 {
-	//ajax: load the player's Warehouse data
+	$.ajax({
+		url:"API/controller.php",
+		type:"GET",
+		data:{act:'??????'}
+	}).done(function(WHDD){
+		var WaHuData = JSON.parse(WHDD);
 	PageRender('Warehouse', SampleWarehousedatas, $('.menuBody'));
 	MenuTitle('倉庫');
-	//end ajax
+	});
 }
 
 function loadmachine()
 {
-	//ajax: load machine data and set timer
-	PageRender('Machine', SampleMachine, $('.factoryBox'));
-	PageRender('loading', {}, $('.MstatusWorking'));
-	$.each($('.MachineBox'), function(index, el) {
-		if( parseInt($(this).find('.Mstatus').attr('idata')) == 0)
-			$(el).click(function(event){MachineFindJob(parseInt($(this).attr('idata')));});
-		else MachineTimer($(el));
+	$.ajax({
+		url:"API/controller.php",
+		type:"GET",
+		data:{act:'??????'}
+	}).done(function(SMach){
+		var SMachine = JSON.parse(SMach);
+		PageRender('Machine', SMachine, $('.factoryBox'));
+		PageRender('loading', {}, $('.MstatusWorking'));
+		$.each($('.MachineBox'), function(index, el) {
+			if( parseInt($(this).find('.Mstatus').attr('idata')) == 0)
+				$(el).click(function(event){MachineFindJob(parseInt($(this).attr('idata')));});
+			else MachineTimer($(el));
+		});
 	});
-	//end ajax
 }
 
 
@@ -230,12 +236,16 @@ function SearchBomlist()
 		if($(this).val() == '')$('.BomItem').show();
 		else
 		{
-			//ajax: search keyword
-			var result_id = [1,2,3];
-			$('.BomItem').hide();
-			for(var i=0;i<result_id.length;i++)
-				$('.BomItem'+result_id[i]).show();
-			//end ajax
+			$.ajax({
+				url:"API/controller.php",
+				type:"GET",
+				data:{act:'??????'}	//key word $(this).val()
+			}).done(function(SrchID){
+				var SrchIDs = JSON.parse(SrchID);
+				$('.BomItem').hide();
+				for(var i=0;i<SrchIDs.length;i++)
+					$('.BomItem'+SrchIDs[i]).show();
+			});
 		}
 	});
 }
