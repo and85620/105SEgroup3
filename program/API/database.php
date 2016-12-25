@@ -1,5 +1,6 @@
 <?php
-error_reporting(E_ERROR | E_PARSE);
+header('Access-Control-Allow-Origin: *');
+ini_set('display_errors', 0);
 require("dbconnect.php");
 function getplayerdata(){
  	global $conn;
@@ -12,16 +13,6 @@ function getplayerdata(){
 function getbuyinglist() {
 	global $conn;
     $result_data = array("inpData"=>array());
-	$sql = "select * from tool ;";
-	$result = mysqli_query($conn,$sql);
-    while (($rs=mysqli_fetch_assoc($result))) {
-        $tid =$rs['tid'];
-        $price =$rs['price'];
-        $result_data["inpData"][] = array(
-            "id"=>$tid,
-            "name"=>"機器",
-            "value"=>$price);
-    }
     $sql = "select * from material ;";
 	$result = mysqli_query($conn,$sql);
     while (($rs=mysqli_fetch_assoc($result))) {
@@ -42,15 +33,16 @@ function getsellinglist() {
     $sql = "select pid, pname, price, num from product where pid != 0;";
 	$result = mysqli_query($conn,$sql);
     while (($rs=mysqli_fetch_assoc($result))) {
+        $num =intval($rs['num']);
+        if(!$num)continue;
         $pid =$rs['pid'];
         $pname =$rs['pname'];
         $price =$rs['price'];
-        $num =$rs['num'];
         $result_data["inpData"][] = array(
             "id"=>$pid,
             "name"=>$pname,
             "value"=>$price,
-            "num"=>$num);
+            "number"=>$num);
     }
     echo json_encode($result_data);
 }
@@ -60,20 +52,21 @@ function getbomlist() {
 	$sql = "select * from product ;";
     $result = mysqli_query($conn,$sql);
     while (($rs=mysqli_fetch_assoc($result))) {
-    $anitem = array(
-            "pid"=>$rs['pid'],
+        $anitem = array(
+            "id"=>intval($rs['pid']),
             "name"=>$rs['pname'],
             "list"=>array(),
             "time"=>$rs['time']);
 
+        if(!$anitem['pid'])continue;
         $sql2 = "select b.mid ID, b.num Num, m.name Name from material m,bomlist b where m.mid = b.mid and b.pid = ".$rs['pid'];
         
         $result2 = mysqli_query($conn,$sql2);
         while (($rs2=mysqli_fetch_assoc($result2))) {
             $anitem["list"][] = array(
-            id=>$rs2['ID'],
-            name=>$rs2['Name'],
-            num=>$rs2['Num']);
+            "id"=>$rs2['ID'],
+            "name"=>$rs2['Name'],
+            "num"=>$rs2['Num']);
         }
         $result_data["bom"][] = $anitem;
     }
@@ -81,7 +74,6 @@ function getbomlist() {
 }
 function getwarehousedata() {
 	global $conn;
-    $result_data = array("inpData"=>array());
     $a=array('machine'=>array(),'material'=>array(),'product'=>array());
 	$sql = "select count(`tid`) CC from tool where tid is not null";
 	$result = mysqli_query($conn,$sql);
@@ -99,21 +91,22 @@ function getwarehousedata() {
     $sql3 = "select * from product ;";
 	$result3 = mysqli_query($conn,$sql3);
     while ($rs3=mysqli_fetch_assoc($result3)) {
+        if(!intval($rs3['num']))continue;
         $a["product"][]=array(
         "name"=>$rs3['pname'],
         "number"=>$rs3['num']);
     }
-    $result_data["inpData"][] = $a;
+    $result_data = array("inpData"=>$a);
     echo json_encode($result_data);
 }
 function getcanproduce() {
     global $conn;
     $result_data = array("bom"=>array());
-    $sql = "select * from product where pid != (SELECT DISTINCT pid from bomlist b inner join material m on b.mid = m.mid where b.num > m.num);";
+    $sql = "select * from product where pid in (SELECT DISTINCT pid from bomlist b inner join material m on b.mid = m.mid where b.num <= m.num);";
     $result = mysqli_query($conn,$sql);
     while (($rs=mysqli_fetch_assoc($result))) {
     $anitem = array(
-            "pid"=>$rs['pid'],
+            "id"=>$rs['pid'],
             "name"=>$rs['pname'],
             "list"=>array(),
             "time"=>$rs['time']);
@@ -123,12 +116,21 @@ function getcanproduce() {
         $result2 = mysqli_query($conn,$sql2);
         while (($rs2=mysqli_fetch_assoc($result2))) {
             $anitem["list"][] = array(
-            id=>$rs2['ID'],
-            name=>$rs2['Name'],
-            num=>$rs2['Num']);
+            "id"=>$rs2['ID'],
+            "name"=>$rs2['Name'],
+            "num"=>$rs2['Num']);
         }
         $result_data["bom"][] = $anitem;
     }
 	echo json_encode($result_data);
+}
+function checkout($Stype,$ShoppingCar) {
+    global $conn;
+    for($i=0;$i<count($ShoppingCar);$i++)
+    {
+        $typeYOO = (($Stype==1)?-1:1);
+        $sql = "call BuySellThing(".$ShoppingCar[$i]['id'].",".$ShoppingCar[$i]['number'].",".$typeYOO.");";
+        $result = mysqli_query($conn,$sql);
+    }
 }
 ?>

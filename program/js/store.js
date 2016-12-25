@@ -1,3 +1,19 @@
+function SetBuyNumber(ajaxD, StoreType)
+{
+	var EJSStr = (StoreType?'SellOut':'BuyIn');
+	var TGClass = (StoreType?'Selling':'Buying');
+	$.ajax({
+		url:"API/controller.php",
+		type:"GET",
+		data:{act:ajaxD}
+	}).done(function(STBData){
+		var SStoredata = JSON.parse(STBData);
+		PageRender(EJSStr, SStoredata, $('.InStore'));
+		$('.STplus').click(function(event) {StoreCheckMoney(1,TGClass,"StoreItem"+$(this).parent().parent().attr('idata'));});
+		$('.STminus').click(function(event) {StoreCheckMoney(-1,TGClass,"StoreItem"+$(this).parent().parent().attr('idata'));});
+		$('.SCheckout').click(function(event) {StoreCheckout(StoreType);});
+	});
+}
 function StoreCheckMoney(val,STtype,CTagName)
 {
 	var numofitem = parseInt($('.'+CTagName).find(".STnum").text());
@@ -28,24 +44,18 @@ function StoreSizeChk(val,STtype,CTagName,itemnumber)
 
 function StoreCheckout(ctype)	//ctype=0,buy ; ctype=1,sell
 {
-
-//tmp tmp tmp tmp
-SamplePersondatas.Money += money_paid_receive*(ctype?1:-1);
-//tmp tmp tmp tmp
-
-
-
-
 	var storecar = [];
 	$.each($('.StoreItem'), function(index, el) {
 		var elNum = parseInt($(el).find('.STnum').text());
 		if(elNum > 0)
 			storecar.push({ id: parseInt($(el).attr('idata')), number: elNum});
 	});
-	var sendingCheckout = { type:ctype, list:JSON.stringify(storecar) };
-	// ajax: send checkout request list
-		//success: reload the store
+	$.ajax({
+		url:"API/controller.php",
+		type:"POST",
+		data:{act:'checkout',type:ctype, list:JSON.stringify(storecar)}
+	}).done(function(dd){
 		loadStore(parseInt($('.Storebox').attr('stype')));
 		loadmachine();
-	//end ajax
+	});
 }

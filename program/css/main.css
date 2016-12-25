@@ -114,7 +114,7 @@ textarea:focus, input:focus{
 	height:92%;
 }
 
-.MachineBox{
+.MachineBuy, .MachineBox{
 	width:300px;
 	height:300px;
 	float: left;
@@ -124,7 +124,7 @@ textarea:focus, input:focus{
 	background-color: rgba(150,150,150,0.2);
 	box-shadow: 3px 3px 3px 0px #888;
 }
-.MachineBox:hover{background-color: rgba(150,150,150,0);}
+.MachineBuy:hover, .MachineBox:hover{background-color: rgba(150,150,150,0);}
 .Mname{
 	width:100%;
 	height:10%;
@@ -149,4 +149,7 @@ textarea:focus, input:focus{
 .MstatusWorking{
 	height:100%;
 	width:100%;
+}
+.addMachineIcon{
+	font-size: 140px;
 }

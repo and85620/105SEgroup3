@@ -1,19 +1,24 @@
 API:
-Player data
-Buying list
-Selling list
-Bom list
-Warehouse data
+Player data ===OK
+Buying list ===OK
+Selling list ===OK
+Bom list ===OK
+Warehouse data  ===OK
+
+BomList that player can produce   ===OK
+
+Buy Machine:
+	add one~ ===OK
+
+Machine start to produce product ===OK
+	input: PID , TID
+
+Machine list + Machine status ===OK
 
 Buy&Sell checkout
-	input: store.js , line 45
+	input: store.js , line 45   ===OK
 
-Machine list + Machine status
-BomList that player can produce
-Check a machine's rest time
-	input: MID
-Machine start to produce product
-	input: PID , MID
 
-Search Bom Keyword
-	input: keyword
+
+
+

@@ -15,31 +15,17 @@
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400' rel='stylesheet' type='text/css'/>
 </head>
 <body>
-	<div class="menubar">
-		<!-- load form MenuBar.ejs -->
-	</div>
-
-
+	<div class="menubar"></div>
 	<div class="toppadding"></div>
-	<div class="factoryBox">
-			<!-- check API (SQL) and add machine(s) from Machine.ejs -->
-	</div>
-
-
+	<div class="factoryBox"></div>
 	<div class="popMenuBox">
 		<div class="popMenu">
-			
 			<div class="menuTitle">
 				<div class="mtContent"></div>
 				<div class="closeMenu"><i class="fa fa-times" aria-hidden="true"></i></div>
 			</div>
-			
-			<div class="menuBody">
-				<!-- load from ejs -->
-			</div>
-
+			<div class="menuBody"></div>
 		</div>
 	</div>
-
 </body>
 </html>

@@ -1,13 +1,15 @@
 <?php
+    header('Access-Control-Allow-Origin: *');
+    ini_set('display_errors', 0);
     require("machine.php");
     require("database.php");
     $act =$_REQUEST["act"];
 switch($act) {
 	case "buy":
-        if(buyMachine()==1){
-            echo "購買成功";
+        if(buymachine()==1){
+            echo 1;
         } else {
-            echo "資金不足";
+            echo 0;
         }
 		break;
     case "buylist":
@@ -44,6 +46,13 @@ switch($act) {
             echo -1;
         }
 		break;
+    case "checkout":
+        checkout($_POST["type"],json_decode($_POST["list"],true));
+		break;
+    case "finishproduce":
+        $tid=$_GET['tid'];
+        finishproduce($tid);
+        break;
 	default:
 }
 ?>

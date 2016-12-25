@@ -2,12 +2,17 @@
 function MachineFindJob(Mid)
 {
 	popmenuUP();
-	//ajax: pop menu to load the Can-do bom list
-	PageRender('Cookbook', SampleBomList, $('.menuBody'));
-	SearchBomlist();
-	$('.BomItem').click(function(event) {MachineSetJob($(this), Mid);});
-	MenuTitle('製造產品');
-	//end ajax
+	$.ajax({
+		url:"API/controller.php",
+		type:"GET",
+		data:{act:'cando'}
+	}).done(function(BomCan){
+		var PdaBomCanda = JSON.parse(BomCan);
+		PageRender('Cookbook', PdaBomCanda, $('.menuBody'));
+		SearchBomlist();
+		$('.BomItem').click(function(event) {MachineSetJob($(this), Mid);});
+		MenuTitle('製造產品');
+	});
 }
 
 function MachineTimer(Mtag)
@@ -23,7 +28,10 @@ function MachineTimer(Mtag)
 				MachineTimer(Mtag);
 			}
 			//else if the time is up, api need to update product number
-			else MachineFinJob(Mtag);
+			else
+			{
+				MachineFinJob(Mtag);
+			}
 			//end ajax
 		},
 		1000
@@ -35,23 +43,30 @@ function MachineSetJob(prodt,MID)
 	var tartg = $('.MachineBox'+MID);
 	tartg.unbind('click');
 	$('.closeMenu > i').click();
-
 	var PID = parseInt(prodt.attr('idata'));
-
-	//ajax: send job request
-	tartg.find('.Mproduct').text(prodt.find('.BomProduct').text());
-	tartg.find('.Mrestime').text(prodt.find('.BomPTime').text());
-	PageRender('loading', {}, tartg.find('.Mstatus'));
-	MachineTimer(tartg);
-	//end ajax
+	$.ajax({
+		url:"API/controller.php",
+		type:"GET",
+		data:{act:'startproduce',pid:PID,tid:MID}
+	}).done(function(sytt){
+		tartg.find('.Mproduct').text(prodt.find('.BomProduct').text());
+		tartg.find('.Mrestime').text(prodt.find('.BomPTime').text());
+		PageRender('loading', {}, tartg.find('.Mstatus'));
+		MachineTimer(tartg);
+	});
 }
 
 function MachineFinJob(Mtag)
 {
-	//ajax: told sql this job finish
-	Mtag.children('.Mstatus').attr('idata',0).html('READY');
-	Mtag.children('.Mproduct').text('');
-	Mtag.click(function(event){MachineFindJob(parseInt(Mtag.attr('idata')));});
-	//end ajax
+	var MID = parseInt(Mtag.attr('idata'));
+	$.ajax({
+		url:"API/controller.php",
+		type:"GET",
+		data:{act:'finishproduce',tid:MID}
+	}).done(function(){
+		Mtag.children('.Mstatus').attr('idata',0).html('READY');
+		Mtag.children('.Mproduct').text('');
+		Mtag.click(function(event){MachineFindJob(MID);});
+	});
 }
 
