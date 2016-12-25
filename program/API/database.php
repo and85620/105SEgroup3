@@ -49,7 +49,7 @@ function getsellinglist() {
 function getbomlist() {
 	global $conn;
     $result_data = array("bom"=>array());
-	$sql = "select * from product ;";
+	$sql = "select * from product;";
     $result = mysqli_query($conn,$sql);
     while (($rs=mysqli_fetch_assoc($result))) {
         $anitem = array(
@@ -58,7 +58,7 @@ function getbomlist() {
             "list"=>array(),
             "time"=>$rs['time']);
 
-        if(!$anitem['pid'])continue;
+        if(!$anitem['id'])continue;
         $sql2 = "select b.mid ID, b.num Num, m.name Name from material m,bomlist b where m.mid = b.mid and b.pid = ".$rs['pid'];
         
         $result2 = mysqli_query($conn,$sql2);
